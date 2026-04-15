@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Section Material Request · ISO 9001</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+    }
+    body {
+      background: #f2f4f8;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 8px 6px;
+      margin: 0;
+    }
+    .form-container {
+      max-width: 400px;
+      width: 100%;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      padding: 16px 12px 20px;
+      border: 1px solid #e9ecf0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      max-height: 100vh;
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      gap: 8px;
+    }
+    
+    .row-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    
+    .logo-img {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      object-fit: contain;
+      background: #fff;
+    }
+    
+    .title-main {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #1e2f4e;
+      letter-spacing: -0.01em;
+    }
+
+    .field-pair {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex: 1;
+    }
+    
+    .field-pair label {
+      font-weight: 600;
+      color: #2c3e50;
+      font-size: 0.8rem;
+      white-space: nowrap;
+      min-width: 55px;
+    }
+    
+    .field-pair input {
+      width: 100%;
+      padding: 8px 6px;
+      border: 1.5px solid #d0d7de;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      background: white;
+    }
+    
+    .field-pair:first-child input {
+      max-width: 90px;
+    }
+    
+    .field-pair:last-child input {
+      max-width: 70px;
+    }
+
+    .requestor-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    
+    .requestor-row .field-pair {
+      flex: 1;
+    }
+    
+    .submit-btn {
+      background: #0a2540;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    
+    .submit-btn:disabled {
+      background: #a0b8cc;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    .error-bar {
+      min-height: 36px;
+      background: #fef1f0;
+      border-radius: 12px;
+      padding: 6px 12px;
+      margin: 8px 0;
+      color: #bc1c1c;
+      font-weight: 500;
+      font-size: 0.8rem;
+      border-left: 4px solid #bc1c1c;
+      word-break: break-word;
+    }
+
+    .section-block {
+      margin-top: 16px;
+      margin-bottom: 12px;
+      border-top: 2px solid #e2e8f0;
+      padding-top: 12px;
+    }
+    
+    .section-title {
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #1e2f4e;
+      font-size: 1rem;
+    }
+
+    .section-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 10px;
+      margin-bottom: 8px;
+      table-layout: fixed;
+    }
+    
+    .section-table th {
+      background: #1e2f4e;
+      color: white;
+      font-weight: 600;
+      font-size: 0.6rem;
+      padding: 5px 1px;
+      text-align: center;
+      border-right: 1px solid #3a4c66;
+      word-break: break-word;
+    }
+    
+    .section-table td {
+      padding: 5px 1px;
+      border-bottom: 1px solid #e2e8f0;
+      text-align: center;
+      vertical-align: middle;
+      background: #fafbfc;
+    }
+    
+    .section-table select, .section-table input {
+      width: 100%;
+      padding: 6px 1px;
+      border-radius: 8px;
+      border: 1.5px solid #cfdde9;
+      background: white;
+      font-size: 0.7rem;
+      text-align: center;
+    }
+
+    .section-table:first-of-type th:nth-child(1),
+    .section-table:first-of-type th:nth-child(2),
+    .section-table:first-of-type th:nth-child(3) {
+      width: 33.33%;
+    }
+
+    .section-table:last-of-type th:nth-child(1) { width: 42%; }
+    .section-table:last-of-type th:nth-child(2) { width: 22%; }
+    .section-table:last-of-type th:nth-child(3) { width: 36%; }
+    
+    .csdim-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+    }
+    
+    .csdim-wrapper select {
+      width: 48%;
+      padding: 5px 0;
+    }
+    
+    .x-symbol {
+      font-weight: 700;
+      font-size: 0.8rem;
+      color: #1e2f4e;
+    }
+
+    .calc-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 6px;
+      background: #f9fafc;
+      border-radius: 10px;
+      table-layout: fixed;
+    }
+    
+    .calc-table th {
+      background: #3a5470;
+      color: white;
+      padding: 5px 1px;
+      font-size: 0.6rem;
+      font-weight: 600;
+      text-align: center;
+      border: 1px solid #4f6a88;
+      word-break: break-word;
+    }
+    
+    .calc-table td {
+      padding: 5px 1px;
+      background: white;
+      border: 1px solid #d9e1ec;
+      text-align: center;
+    }
+    
+    .calc-table input {
+      width: 100%;
+      padding: 6px 1px;
+      border-radius: 8px;
+      border: 1.5px solid #cfdde9;
+      font-size: 0.75rem;
+      text-align: center;
+    }
+
+    .status-cell {
+      font-size: 0.7rem;
+      text-align: center;
+      font-weight: 600;
+    }
+    
+    .icon-valid { color: #27ae60; }
+    .icon-invalid { color: #e74c3c; }
+    .icon-leftover { color: #f39c12; }
+
+    .info-note {
+      font-size: 0.6rem;
+      color: #556c83;
+      margin-top: 3px;
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+<div class="form-container">
+  <div class="row-logo">
+    <img class="logo-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230a2540' rx='20'/%3E%3Ctext x='22' y='68' font-family='Arial' font-weight='bold' font-size='46' fill='white'%3ESR%3C/text%3E%3C/svg%3E" alt="logo">
+    <span class="title-main">Section Request</span>
+  </div>
+
+  <div class="row">
+    <div class="field-pair"><label>SO No.</label><input type="text" id="soNo" placeholder="SO-123" maxlength="8"></div>
+    <div class="field-pair"><label>Item No.</label><input type="text" id="itemNo" placeholder="IT-01" maxlength="5"></div>
+  </div>
+
+  <div class="row">
+    <div class="field-pair"><label>Customer</label><input type="text" id="customerName" placeholder="Customer name" style="max-width: none;"></div>
+  </div>
+
+  <div class="row">
+    <div class="field-pair"><label>Delivery</label><input type="date" id="deliveryDate" value="2026-04-20" style="max-width: none;"></div>
+  </div>
+
+  <div class="requestor-row">
+    <div class="field-pair"><label>Requestor</label><input type="text" id="requestor" placeholder="Worker ID" style="max-width: none;"></div>
+    <button class="submit-btn" id="submitMainBtn" disabled>Submit</button>
+  </div>
+
+  <div class="error-bar" id="errorBar"></div>
+
+  <div id="sectionsContainer"></div>
+</div>
+
+<div id="errorModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center;">
+    <div style="background: white; padding: 20px; border-radius: 15px; text-align: center; max-width: 400px; width: 90%;">
+        <h3 style="margin-bottom: 15px; color: #e74c3c; font-size: 20px;" id="modalTitle">⚠️ Validation Errors</h3>
+        <div style="background: #fef1f0; padding: 12px; border-radius: 8px; margin-bottom: 18px; text-align: left; max-height: 250px; overflow-y: auto;">
+            <div id="modalErrorList" style="color: #555; font-size: 13px; line-height: 1.5;"></div>
+        </div>
+        <p style="margin-bottom: 18px; color: #555; font-size: 13px;" id="modalQuestion">
+            Force submit anyway?
+        </p>
+        <div style="display: flex; gap: 10px; justify-content: center;">
+            <button onclick="window.confirmModal(true)" 
+                    style="padding: 10px 25px; background: #2ecc71; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px;">
+                Yes
+            </button>
+            <button onclick="window.confirmModal(false)" 
+                    style="padding: 10px 25px; background: #e74c3c; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px;">
+                No
+            </button>
+        </div>
+    </div>
+</div>
+
+<iframe name="hiddenFrame" id="hiddenFrame" style="display:none;"></iframe>
+
+<script>
+  (function(){
+    "use strict";
+
+    const GAS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbzCiELsg_K_LpCrMT7aAWBf49cKTEAY4m1VFUR-5yvAWxr0ej9ocXGEHFIVDyazrm07/exec';
+    const SECTION_LEN = 6000;
+
+    const soNo = document.getElementById('soNo');
+    const itemNo = document.getElementById('itemNo');
+    const customerName = document.getElementById('customerName');
+    const deliveryDate = document.getElementById('deliveryDate');
+    const requestor = document.getElementById('requestor');
+    const submitBtn = document.getElementById('submitMainBtn');
+    const errorBar = document.getElementById('errorBar');
+    const sectionsContainer = document.getElementById('sectionsContainer');
+    const errorModal = document.getElementById('errorModal');
+    const modalErrorList = document.getElementById('modalErrorList');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalQuestion = document.getElementById('modalQuestion');
+
+    let pendingSubmitData = null;
+    let currentErrors = [];
+    let modalCallback = null;
+
+    function generateSections() {
+      for (let i = 1; i <= 5; i++) {
+        const block = document.createElement('div');
+        block.className = 'section-block';
+        block.innerHTML = `
+          <div class="section-title">📐 Section Type ${i}</div>
+          
+          <table class="section-table">
+            <thead><tr><th>Shape</th><th>Grade</th><th>Surface</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><select id="shape${i}" data-section="${i}"><option value="">-</option><option>Square</option><option>Round</option><option>I-Beam</option></select></td>
+                <td><select id="grade${i}" data-section="${i}"><option value="">-</option><option>S275</option><option>S355</option><option>304 SS</option></select></td>
+                <td><select id="surface${i}" data-section="${i}"><option value="">-</option><option>Mill</option><option>Galvanized</option><option>Primed</option></select></td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <table class="section-table">
+            <thead><tr><th>C/S Dim</th><th>Thickness</th><th>Current Stock</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="csdim-wrapper">
+                    <select id="csDimLeft${i}" data-section="${i}"><option value="">-</option><option>50</option><option>75</option><option>100</option><option>150</option></select>
+                    <span class="x-symbol">x</span>
+                    <select id="csDimRight${i}" data-section="${i}"><option value="">-</option><option>50</option><option>75</option><option>100</option><option>150</option></select>
+                  </div>
+                </td>
+                <td><select id="thickness${i}" data-section="${i}"><option value="">-</option><option>3.0</option><option>5.0</option><option>8.0</option><option>10.0</option></select></td>
+                <td><input type="text" id="currentStock${i}" placeholder="pcs" readonly style="background:#f4f7fb;"></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table class="calc-table">
+            <thead>
+              <tr><th colspan="2">Based on Drawing</th><th rowspan="2">Actual Sections<br><span style="font-weight:400;">(Qty)</span></th><th rowspan="2">Status</th></tr>
+              <tr><th>Piece Length</th><th>x Piece Qty</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input type="number" id="pieceLength${i}" step="0.1" min="0" placeholder="850" data-section="${i}"></td>
+                <td><input type="number" id="pieceQty${i}" step="1" min="1" placeholder="8" data-section="${i}"></td>
+                <td><input type="number" id="actualQty${i}" step="1" min="0" placeholder="0" data-section="${i}"></td>
+                <td class="status-cell" id="status${i}"></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="info-note">Max/section: <span id="maxPerSection${i}">-</span> | Min sections: <span id="minRequired${i}">-</span></div>
+        `;
+        sectionsContainer.appendChild(block);
+      }
+    }
+
+    generateSections();
+
+    function isBaseFormComplete() {
+      if (!soNo.value.trim()) return false;
+      if (!itemNo.value.trim()) return false;
+      if (!customerName.value.trim()) return false;
+      if (!deliveryDate.value) return false;
+      if (!requestor.value.trim()) return false;
+      return true;
+    }
+
+    function validateSection(sectionNum) {
+      const shape = document.getElementById(`shape${sectionNum}`).value;
+      const grade = document.getElementById(`grade${sectionNum}`).value;
+      const surface = document.getElementById(`surface${sectionNum}`).value;
+      const csDimL = document.getElementById(`csDimLeft${sectionNum}`).value;
+      const csDimR = document.getElementById(`csDimRight${sectionNum}`).value;
+      const thickness = document.getElementById(`thickness${sectionNum}`).value;
+      const pieceLength = parseFloat(document.getElementById(`pieceLength${sectionNum}`).value) || 0;
+      const pieceQty = parseFloat(document.getElementById(`pieceQty${sectionNum}`).value) || 0;
+      const actualQty = parseFloat(document.getElementById(`actualQty${sectionNum}`).value) || 0;
+      
+      const isEmpty = !shape && !grade && !surface && !csDimL && !csDimR && !thickness && pieceLength === 0 && pieceQty === 0 && actualQty === 0;
+      
+      if (sectionNum > 1 && isEmpty) {
+        document.getElementById(`status${sectionNum}`).innerHTML = '';
+        document.getElementById(`maxPerSection${sectionNum}`).textContent = '-';
+        document.getElementById(`minRequired${sectionNum}`).textContent = '-';
+        return { valid: true, isEmpty: true };
+      }
+      
+      if (!shape || !grade || !surface || !csDimL || !csDimR || !thickness || pieceLength <= 0 || pieceQty <= 0) {
+        return { valid: false, error: 'incomplete' };
+      }
+
+      const maxPerSection = Math.floor(SECTION_LEN / pieceLength);
+      const minRequired = Math.ceil(pieceQty / maxPerSection);
+      
+      document.getElementById(`maxPerSection${sectionNum}`).textContent = maxPerSection;
+      document.getElementById(`minRequired${sectionNum}`).textContent = minRequired;
+
+      const statusEl = document.getElementById(`status${sectionNum}`);
+      
+      if (actualQty === 0) {
+        statusEl.innerHTML = '<span class="icon-leftover">Leftover</span>';
+        return { valid: false, error: 'zero_actual', maxPerSection, minRequired, pieceLength, pieceQty, actualQty };
+      }
+      
+      if (actualQty < minRequired) {
+        statusEl.innerHTML = '<span class="icon-invalid">❌</span>';
+        return { valid: false, error: 'insufficient', maxPerSection, minRequired, pieceLength, pieceQty, actualQty };
+      } else if (actualQty > minRequired) {
+        statusEl.innerHTML = '<span class="icon-invalid">❌</span>';
+        return { valid: false, error: 'excess', maxPerSection, minRequired, pieceLength, pieceQty, actualQty };
+      } else {
+        statusEl.innerHTML = '<span class="icon-valid">✅</span>';
+        return { valid: true, error: null, maxPerSection, minRequired, pieceLength, pieceQty, actualQty };
+      }
+    }
+
+    function collectValidationErrors() {
+      const errors = [];
+      const zeroActualSections = [];
+      
+      for (let i = 1; i <= 5; i++) {
+        const validation = validateSection(i);
+        if (!validation.valid && !validation.isEmpty) {
+          if (validation.error === 'incomplete') {
+            errors.push(`Section ${i}: Incomplete data`);
+          } else if (validation.error === 'insufficient') {
+            errors.push(`Section ${i}: Need ${validation.pieceQty} pcs, min ${validation.minRequired} sections (you entered ${validation.actualQty})`);
+          } else if (validation.error === 'excess') {
+            errors.push(`Section ${i}: Only need ${validation.minRequired} sections (you entered ${validation.actualQty} - excess)`);
+          } else if (validation.error === 'zero_actual') {
+            zeroActualSections.push(i);
+          }
+        }
+      }
+
+      let hasAnySection = false;
+      for (let i = 1; i <= 5; i++) {
+        const shape = document.getElementById(`shape${i}`).value;
+        if (shape) { hasAnySection = true; break; }
+      }
+      if (!hasAnySection) {
+        errors.push('At least one section must be filled');
+      }
+
+      return { errors, zeroActualSections };
+    }
+
+    function updateUI() {
+      for (let i = 1; i <= 5; i++) {
+        const left = document.getElementById(`csDimLeft${i}`).value;
+        const right = document.getElementById(`csDimRight${i}`).value;
+        const stockEl = document.getElementById(`currentStock${i}`);
+        if (left && right) {
+          stockEl.value = '24 pcs';
+        } else {
+          stockEl.value = '';
+        }
+      }
+
+      const baseComplete = isBaseFormComplete();
+      const { errors } = collectValidationErrors();
+      currentErrors = errors;
+      
+      if (errors.length > 0) {
+        errorBar.innerHTML = '❌ ' + errors.join('<br>• ');
+      } else {
+        errorBar.innerHTML = '';
+      }
+
+      submitBtn.disabled = !baseComplete;
+    }
+
+    function collectSectionsData() {
+      const sections = [];
+      
+      for (let i = 1; i <= 5; i++) {
+        const shape = document.getElementById(`shape${i}`).value;
+        const grade = document.getElementById(`grade${i}`).value;
+        const surface = document.getElementById(`surface${i}`).value;
+        const csDimL = document.getElementById(`csDimLeft${i}`).value;
+        const csDimR = document.getElementById(`csDimRight${i}`).value;
+        const thickness = document.getElementById(`thickness${i}`).value;
+        const pieceLength = document.getElementById(`pieceLength${i}`).value;
+        const pieceQty = document.getElementById(`pieceQty${i}`).value;
+        const actualQty = document.getElementById(`actualQty${i}`).value;
+        const currentStock = document.getElementById(`currentStock${i}`).value;
+        const maxPerSection = document.getElementById(`maxPerSection${i}`).textContent;
+        const minRequired = document.getElementById(`minRequired${i}`).textContent;
+        
+        // 只收集有填写 Shape 的 Section
+        if (shape) {
+          sections.push({
+            sectionType: `Section ${i}`,
+            shape: shape,
+            grade: grade,
+            surface: surface,
+            csDim: csDimL + 'x' + csDimR,
+            thickness: thickness,
+            currentStock: currentStock,
+            pieceLength: pieceLength,
+            pieceQty: pieceQty,
+            actualQty: actualQty,
+            maxPerSection: maxPerSection,
+            minRequired: minRequired
+          });
+        }
+      }
+      
+      return sections;
+    }
+
+    function collectAllData() {
+      const sectionsData = collectSectionsData();
+      
+      return {
+        timestamp: new Date().toISOString(),
+        soNo: soNo.value,
+        itemNo: itemNo.value,
+        customerName: customerName.value,
+        deliveryDate: deliveryDate.value,
+        requestor: requestor.value,
+        sectionsData: JSON.stringify(sectionsData),
+        errorMessages: currentErrors.join('; ')
+      };
+    }
+
+    function performSubmit(data) {
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = GAS_WEBAPP_URL;
+      form.target = 'hiddenFrame';
+      
+      Object.keys(data).forEach(key => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = data[key] || '';
+        form.appendChild(input);
+      });
+      
+      document.body.appendChild(form);
+      form.submit();
+      setTimeout(() => document.body.removeChild(form), 1000);
+      
+      alert('✅ Request submitted!');
+      errorBar.innerHTML = '';
+      currentErrors = [];
+    }
+
+    function showScrapConfirmModal(zeroSections, onConfirm) {
+      const sectionList = zeroSections.map(i => `Section ${i}`).join(', ');
+      modalTitle.textContent = '♻️ Scrap Material Used?';
+      modalErrorList.innerHTML = `${sectionList} has piece length & quantity but Actual Qty = 0.<br><br>Did you use leftover scrap material?`;
+      modalQuestion.textContent = 'Select "Yes" to confirm scrap usage and submit.';
+      modalCallback = onConfirm;
+      errorModal.style.display = 'flex';
+    }
+
+    function showErrorModal(errors, onConfirm) {
+      modalTitle.textContent = '⚠️ Validation Errors';
+      modalErrorList.innerHTML = errors.map(e => `• ${e}`).join('<br>');
+      modalQuestion.textContent = 'Force submit anyway?';
+      modalCallback = onConfirm;
+      errorModal.style.display = 'flex';
+    }
+
+    window.confirmModal = function(isYes) {
+      errorModal.style.display = 'none';
+      if (modalCallback) {
+        modalCallback(isYes);
+        modalCallback = null;
+      }
+    };
+
+    function handleSubmit() {
+      if (!isBaseFormComplete()) {
+        alert('Please fill all required fields (SO No., Item No., Customer, Delivery Date, Requestor)');
+        return;
+      }
+
+      const { errors, zeroActualSections } = collectValidationErrors();
+      
+      if (zeroActualSections.length > 0) {
+        pendingSubmitData = collectAllData();
+        showScrapConfirmModal(zeroActualSections, (confirmed) => {
+          if (confirmed) {
+            performSubmit(pendingSubmitData);
+            pendingSubmitData = null;
+          } else {
+            errorBar.innerHTML = '❌ Please enter Actual Qty or adjust values.';
+            pendingSubmitData = null;
+          }
+        });
+        return;
+      }
+      
+      if (errors.length > 0) {
+        pendingSubmitData = collectAllData();
+        showErrorModal(errors, (confirmed) => {
+          if (confirmed) {
+            performSubmit(pendingSubmitData);
+            pendingSubmitData = null;
+          } else {
+            pendingSubmitData = null;
+          }
+        });
+      } else {
+        performSubmit(collectAllData());
+      }
+    }
+
+    document.addEventListener('input', updateUI);
+    document.addEventListener('change', updateUI);
+    
+    errorModal.addEventListener('click', (e) => {
+      if (e.target === errorModal) {
+        errorModal.style.display = 'none';
+      }
+    });
+
+    submitBtn.addEventListener('click', handleSubmit);
+    
+    window.addEventListener('load', () => {
+      if (!deliveryDate.value) deliveryDate.value = '2026-04-20';
+      updateUI();
+    });
+  })();
+</script>
+</body>
+</html>
